@@ -1,5 +1,5 @@
 antiinflammatory_table.csv
-GSE92742_Broad_LINCS_inst_info.txt
-GSE70138_Broad_LINCS_inst_info.txt
-cmap_instances_02_updated.txt
-faers.db
+data/GSE92742_Broad_LINCS_inst_info.txt
+data/GSE70138_Broad_LINCS_inst_info.txt
+data/cmap_instances_02_updated.txt
+data/faers.db
