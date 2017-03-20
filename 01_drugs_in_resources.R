@@ -44,7 +44,7 @@ lincs_phase_1<-lincs_phase_1[-1,]
 lincs_phase_1_drugs = unique(str_to_upper(unique(lincs_phase_1$pert_desc)))
 lincs_phase_2_drugs = unique(str_to_upper(unique(lincs_phase_2$sm_name)))
 
-cMap = read.table(file = cMap)
+cMap = fread(input = cMap, data.table = FALSE)
 cMap_drugs = unique(cMap$normalized_name)
 
 ################################
