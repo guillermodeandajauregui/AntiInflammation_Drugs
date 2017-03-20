@@ -16,7 +16,7 @@ library(data.table)
 #Input files
 ################################
 
-inputs = read.table(file = "input_files.txt", header = FALSE, sep = "\t")$V1
+inputs = read.table(file = "input_files.txt", header = FALSE, sep = "\t", stringsAsFactors = FALSE)$V1
 
 #manually curated anti inflammatory drug annotation from ATC
 ai_drugs = inputs[1]
