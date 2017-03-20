@@ -11,7 +11,7 @@
 
 library(stringr)
 library(RSQLite)
-
+library(data.table)
 ################################
 #Input files
 ################################
