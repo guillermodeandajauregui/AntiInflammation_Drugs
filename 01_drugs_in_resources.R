@@ -59,7 +59,7 @@ FAERS_drugs = unique(dbGetQuery(con, "SELECT * FROM drugmap")$replacement)
 
 drugs_in_lincs_phase_1 = drugList[drugList%in%lincs_phase_1_drugs]
 drugs_in_lincs_phase_2 = drugList[drugList%in%lincs_phase_2_drugs]
-drugs_in_cMap = drugList[drugList%in%cMap]
+drugs_in_cMap = drugList[drugList%in%cMap_drugs]
 drugs_in_FAERS = drugList[drugList%in%FAERS_drugs]
 
 if("results"%in%dir()==FALSE){
