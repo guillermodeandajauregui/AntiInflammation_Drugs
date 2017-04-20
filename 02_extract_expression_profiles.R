@@ -16,9 +16,7 @@
 #libraries
 ################################
 library(data.table)
-source(file = "~/X/GITS/l1ktools/R/cmap/io.R")
-source(file = "~/GITS/cMapDrugNetwork/cMap_functions.R")
-source(file = "~/GITS/cMapDrugNetwork/RankMatrix_annotation_functions.R")
+source("libraries.R")
 #
 inputs = read.table(file = "input_files.txt", header = FALSE, sep = "\t", stringsAsFactors = FALSE)$V1
 #read list of drugs
