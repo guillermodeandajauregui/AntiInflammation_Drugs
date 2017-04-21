@@ -16,9 +16,10 @@
 #libraries
 ################################
 library(data.table)
-source("libraries.R")
+source("libraries/libraries.R")
 #
-inputs = read.table(file = "input_files.txt", header = FALSE, sep = "\t", stringsAsFactors = FALSE)$V1
+#inputs = read.table(file = "input_files.txt", header = FALSE, sep = "\t", stringsAsFactors = FALSE)$V1
+inputs = scan(file = "input_files.txt", what = "character", comment.char = "#")
 #read list of drugs
 ai_cmap   =readLines("results/ai_drugs_in_cMap.txt")
 ai_lincs1 =readLines("results/ai_drugs_in_lincs_phase_1.txt")
