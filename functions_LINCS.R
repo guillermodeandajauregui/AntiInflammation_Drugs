@@ -17,21 +17,21 @@ drugEset_lincs_level5 <- function(gctx_path,
                                   DrugList)
 {
   #read files 
-  lincs2_gctx = parse.gctx(lincs2_gctx)
+  lincs_gctx = parse.gctx(gctx_path)
   print("loaded gctx")
-  lincs2_siginfo = fread(lincs2_siginfo)
+  lincs_siginfo = fread(siginfo_path)
   print("loaded signature info")
-  lincs2_geneinfo = fread(lincs2_geneinfo)
+  lincs_geneinfo = fread(geneinfo_path)
   print("loaded gene info")
   
   #find singatures that match druglist
-  instances_ai = lincs2_siginfo[which(str_to_upper(lincs2_siginfo$pert_iname)%in%DrugList), 
+  instances_ai = lincs_siginfo[which(str_to_upper(lincs_siginfo$pert_iname)%in%DrugList), 
                                 c("sig_id", "pert_iname")]
   
   #subset matrix in gctx, and change row ids to gene symbol
-  subset_matrix = lincs2_gctx@mat[, match(instances_ai$sig_id, lincs2_gctx@cdesc$id)]
-  rownames(subset_matrix) <- geneinfo$pr_gene_symbol[match(rownames(subset_matrix), 
-                                                           as.character(geneinfo$pr_gene_id))]
+  subset_matrix = lincs_gctx@mat[, match(instances_ai$sig_id, lincs_gctx@cdesc$id)]
+  rownames(subset_matrix) <- lincs_geneinfo$pr_gene_symbol[match(rownames(subset_matrix), 
+                                                           as.character(lincs_geneinfo$pr_gene_id))]
   
   #make object of class ExpressionSet
   
