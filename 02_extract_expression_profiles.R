@@ -113,4 +113,5 @@ fwrite(x = exprs_ai_lincs2_krubor,
        row.names = TRUE, 
        col.names = TRUE)
 
+save(ai_cmap_krubor, ai_lincs1_krubor, ai_lincs2_krubor, file = "results/krubors_for_mantra.RData")
 print("check your matrices in the results directory")
