@@ -39,6 +39,7 @@ ai_lincs2_faers = intersect(ai_lincs2, ai_faers)
 ###########################
 #       CMap              #
 ###########################
+print("processing CMap")
 
 cmap_path       = inputs[6]
 cmap_matrix     = ReRank(fread.Ranked.Matrix(cmap_path))
@@ -49,7 +50,7 @@ cmap_annotation = fread(input = inputs[4], data.table = FALSE)
 #subset CMap
 ai_cmap_DrugEset = drug.eset(RankedMatrix = cmap_matrix, 
                              SampleInfoFile = cmap_annotation, 
-                             DrugList = ai_cmap_faers)
+                             DrugList = ai_cmap)
 
 #merge all drug profiles by Kru-Bor
 ai_cmap_krubor = RankMerging(ai_cmap_DrugEset)
@@ -67,28 +68,20 @@ fwrite(x = exprs_ai_cmap_krubor,
 #       LINCS             #
 ###########################
 
+#phase 1
+print("processing LINCS-Phase1")
 
+lincs_phase1_path_gctx     = inputs[7]
+lincs_phase1_path_siginfo  = inputs[9]
+lincs_phase1_path_geneinfo = inputs[11]
 
+ai_lincs1_eset  =    drugEset_lincs_level5(gctx_path = lincs_phase1_path_gctx,
+                                        siginfo_path = lincs_phase1_path_siginfo,
+                                        geneinfo_path = lincs_phase1_path_geneinfo,
+                                        DrugList = ai_lincs1)
 
+ai_lincs1_krubor = RankMerging(ai_lincs1_eset)
 
-###########################################################################
-lincs_phase1_anot = inputs[9]
-lincs_phase2_anot = inputs[10]
-
-lincs_phase1_matrix = inputs[7]
-lincs_phase2_matrix = inputs[8]
-
-
-###########################################################################
-#Phase 1
-ai_lincs1_DrugEset = drugEset_lincs_phase01(lincs_phase01 = inputs[7], 
-                                            lincs_annotation = inputs[9],
-                                            geneinfo = inputs[11],
-                                            #drugList = ai_lincs1
-                                            drugList = ai_lincs1_faers
-                                            )
-
-ai_lincs1_krubor = RankMerging(ai_lincs1_DrugEset)
 exprs_ai_lincs1_krubor = as.data.frame(exprs(ai_lincs1_krubor))
 
 fwrite(x = exprs_ai_lincs1_krubor, 
@@ -98,7 +91,27 @@ fwrite(x = exprs_ai_lincs1_krubor,
        row.names = TRUE, 
        col.names = TRUE)
 
-##match column annotation to drug list
-##subset matrix 
-##make annotated eset
-##kru-bor
+#Phase 2
+print("processing LINCS-Phase2")
+
+lincs_phase2_path_gctx     = inputs[8]
+lincs_phase2_path_siginfo  = inputs[10]
+lincs_phase2_path_geneinfo = inputs[12]
+
+ai_lincs2_eset  =    drugEset_lincs_level5(gctx_path = lincs_phase2_path_gctx,
+                                           siginfo_path = lincs_phase2_path_siginfo,
+                                           geneinfo_path = lincs_phase2_path_geneinfo,
+                                           DrugList = ai_lincs2)
+
+ai_lincs2_krubor = RankMerging(ai_lincs2_eset)
+
+exprs_ai_lincs2_krubor = as.data.frame(exprs(ai_lincs2_krubor))
+
+fwrite(x = exprs_ai_lincs2_krubor, 
+       file = "results/krubor_lincs2_ai.txt", 
+       quote = FALSE, 
+       sep = "\t", 
+       row.names = TRUE, 
+       col.names = TRUE)
+
+print("check your matrices in the results directory")
