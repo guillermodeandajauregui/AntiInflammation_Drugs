@@ -17,6 +17,7 @@
 ################################
 library(data.table)
 source("libraries/libraries.R")
+
 #
 #inputs = read.table(file = "input_files.txt", header = FALSE, sep = "\t", stringsAsFactors = FALSE)$V1
 inputs = scan(file = "input_files.txt", what = "character", comment.char = "#")
@@ -30,6 +31,8 @@ ai_lincs = union(ai_lincs1, ai_lincs2)
 ##select only drugs with adverse event info
 ai_cmap_faers  = intersect(ai_cmap, ai_faers)
 ai_lincs_faers = intersect(ai_lincs, ai_faers)
+ai_lincs1_faers = intersect(ai_lincs1, ai_faers)
+ai_lincs2_faers = intersect(ai_lincs2, ai_faers)
 
 #subset CMap/LINCS matrix
 
@@ -50,18 +53,50 @@ ai_cmap_DrugEset = drug.eset(RankedMatrix = cmap_matrix,
 
 #merge all drug profiles by Kru-Bor
 ai_cmap_krubor = RankMerging(ai_cmap_DrugEset)
-exprs_ai_cmap_krubor = exprs(ai_cmap_krubor)
+exprs_ai_cmap_krubor = as.data.frame(exprs(ai_cmap_krubor))
+
+fwrite(x = exprs_ai_cmap_krubor, 
+       file = "results/krubor_cmap_ai.txt", 
+       quote = FALSE, 
+       sep = "\t", 
+       row.names = TRUE, 
+       col.names = TRUE)
 
 
 ###########################
 #       LINCS             #
 ###########################
 
+
+
+
+
+###########################################################################
 lincs_phase1_anot = inputs[9]
 lincs_phase2_anot = inputs[10]
 
 lincs_phase1_matrix = inputs[7]
 lincs_phase2_matrix = inputs[8]
+
+
+###########################################################################
+#Phase 1
+ai_lincs1_DrugEset = drugEset_lincs_phase01(lincs_phase01 = inputs[7], 
+                                            lincs_annotation = inputs[9],
+                                            geneinfo = inputs[11],
+                                            #drugList = ai_lincs1
+                                            drugList = ai_lincs1_faers
+                                            )
+
+ai_lincs1_krubor = RankMerging(ai_lincs1_DrugEset)
+exprs_ai_lincs1_krubor = as.data.frame(exprs(ai_lincs1_krubor))
+
+fwrite(x = exprs_ai_lincs1_krubor, 
+       file = "results/krubor_lincs1_ai.txt", 
+       quote = FALSE, 
+       sep = "\t", 
+       row.names = TRUE, 
+       col.names = TRUE)
 
 ##match column annotation to drug list
 ##subset matrix 
