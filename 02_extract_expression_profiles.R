@@ -15,7 +15,6 @@
 ################################
 #libraries
 ################################
-library(data.table)
 source("libraries/libraries.R")
 
 #
