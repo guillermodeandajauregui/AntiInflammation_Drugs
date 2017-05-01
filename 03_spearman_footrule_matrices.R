@@ -16,17 +16,17 @@ source("libraries/libraries.R")
 
 
 
-cmap_matrix= fread(input = "results/krubor_cmap_ai.txt", data.table = FALSE)
+cmap_matrix_a= fread(input = "results/krubor_cmap_ai.txt", data.table = FALSE)
 rownames(cmap_matrix_a) <- cmap_matrix_a[,1]
 cmap_matrix_a <- cmap_matrix_a[,-1]
 cmap_spearman_matrix = spearman_footrule_matrix(cmap_matrix_a)
 
-lincs1_matrix= fread(input = "results/krubor_lincs1_ai.txt", data.table = FALSE)
+lincs1_matrix_a= fread(input = "results/krubor_lincs1_ai.txt", data.table = FALSE)
 rownames(lincs1_matrix_a) <- lincs1_matrix_a[,1]
 lincs1_matrix_a <- lincs1_matrix_a[,-1]
 lincs1_spearman_matrix = spearman_footrule_matrix(lincs1_matrix_a)
 
-lincs2_matrix= fread(input = "results/krubor_lincs2_ai.txt", data.table = FALSE)
+lincs2_matrix_a= fread(input = "results/krubor_lincs2_ai.txt", data.table = FALSE)
 rownames(lincs2_matrix_a) <- lincs2_matrix_a[,1]
 lincs2_matrix_a <- lincs2_matrix_a[,-1]
 lincs2_spearman_matrix = spearman_footrule_matrix(lincs2_matrix_a)
