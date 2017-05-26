@@ -31,21 +31,21 @@ rownames(lincs2_matrix_a) <- lincs2_matrix_a[,1]
 lincs2_matrix_a <- lincs2_matrix_a[,-1]
 lincs2_spearman_matrix = spearman_footrule_matrix(lincs2_matrix_a)
 
-fwrite(x = cmap_spearman_matrix, 
+fwrite(x = as.data.frame(cmap_spearman_matrix), 
        file = "results/cmap_spearman_footrule_matrix.txt", 
        quote = FALSE, 
        sep = "\t", 
        row.names = TRUE, 
        col.names = TRUE)
 
-fwrite(x = lincs1_spearman_matrix, 
+fwrite(x = as.data.frame(lincs1_spearman_matrix), 
        file = "results/lincs1_spearman_footrule_matrix.txt", 
        quote = FALSE, 
        sep = "\t", 
        row.names = TRUE, 
        col.names = TRUE)
 
-fwrite(x = lincs2_spearman_matrix, 
+fwrite(x = as.data.frame(lincs2_spearman_matrix), 
        file = "results/lincs2_spearman_footrule_matrix.txt", 
        quote = FALSE, 
        sep = "\t", 
