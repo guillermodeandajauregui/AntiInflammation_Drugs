@@ -1,4 +1,6 @@
+source("libraries/libraries.R")
 library(ChemmineR)
+
 #read structures from the Open SDF file
 sdftest_open = read.SDFset(sdfstr = "~/openstructures.sdf")
 
@@ -42,6 +44,7 @@ cmap_non_found_smiles = c("FLUFENAMIC ACID"= "FC(F)(F)c1cc(ccc1)Nc2ccccc2C(=O)O"
                           "FLUNIXIN" = "CC1=C(C=CC=C1NC2=C(C=CC=N2)C(=O)O)C(F)(F)F"
                           )
 
+cmap_non_found_sdfset = smiles2sdf(cmap_non_found_smiles)
 cmap_combined_smiles = c(sdf_ainf_cmap, cmap_non_found_sdfset)
 
 cmap_ap = sdf2ap(cmap_combined_smiles)
@@ -62,7 +65,13 @@ cmap_tanimoto_matrix
 cmap_tanimoto_g = graph_from_adjacency_matrix(cmap_tanimoto_matrix, weighted = TRUE, mode = "undirected", diag = FALSE)
 #plot(cmap_tanimoto_g)
 #E(cmap_tanimoto_g)[weight >= 0.50]
-cmap_tanimoto_g = delete.edges(graph = cmap_tanimoto_g, E(cmap_tanimoto_g)[weight <= 0.25])
+quantile(E(cmap_tanimoto_g)$weight, 0.90) #nice cut
+quantile(E(cmap_tanimoto_g)$weight, 0.66) #comparable to perturbation similarity network
+#quantile(E(cmap_tanimoto_g)$weight, 0.66) #comparable to functional network
+#cmap_tanimoto_g = delete.edges(graph = cmap_tanimoto_g, E(cmap_tanimoto_g)[weight <= quantile(E(cmap_tanimoto_g)$weight, 0.66)])
+
+cmap_tanimoto_g = funcion_corte_optimo(cmap_tanimoto_matrix)$g #0.65
+
 #plot(cmap_tanimoto_g)
 #components(cmap_tanimoto_g)
 cmap_tanimoto_infomap = infomap.community(cmap_tanimoto_g)
@@ -70,3 +79,17 @@ cmap_tanimoto_walktrap = walktrap.community(cmap_tanimoto_g)
 #cmap_tanimoto_infomap$modularity
 plot(cmap_tanimoto_infomap, cmap_tanimoto_g)
 plot(cmap_tanimoto_walktrap, cmap_tanimoto_g)
+table(degree(cmap_tanimoto_g))
+degree(cmap_tanimoto_g)
+transitivity(cmap_tanimoto_g)
+average.path.length(cmap_tanimoto_g)
+V(cmap_tanimoto_g)
+cmap_tanimoto_g
+
+red_er = erdos.renyi.game(47, p.or.m = 363, type = "gnm")
+plot(red_er)
+transitivity(red_er)
+average.path.length(red_er)
+infomap.community(red_er)
+
+save(cmap_tanimoto_matrix, cmap_tanimoto_g, red_er, cmap_tanimoto_infomap, cmap_tanimoto_walktrap, file = "results/structural_similarity.RData")

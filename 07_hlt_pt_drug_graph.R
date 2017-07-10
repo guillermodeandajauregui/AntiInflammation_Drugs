@@ -60,3 +60,6 @@ plot(g_hlt_drug)
 components(g_hlt_drug)
 degree(g_hlt_drug, v = V(g_hlt_drug)[type == FALSE])
 tail(degree(g_hlt_drug, v = V(g_hlt_drug)[type == TRUE])[order(degree(g_hlt_drug, v = V(g_hlt_drug)[type == TRUE]))])
+
+write.graph(g_hlt_drug, file = "results/drug_hlt.gml", format = "gml")
+
