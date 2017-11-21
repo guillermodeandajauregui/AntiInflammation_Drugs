@@ -1,0 +1,15 @@
+library(data.table)
+library(igraph)
+library(stringr)
+library(parallel)
+library(fgsea)
+library(rhdf5)
+source(file = "l1ktools/R/cmap/io.R") # from https://github.com/cmap/l1ktools
+source(file = "~/GITS/cMapDrugNetwork/cMap_functions.R")
+source(file = "~/GITS/cMapDrugNetwork/RankMatrix_annotation_functions.R")
+source(file = "~/GITS/AntiInflammation_Drugs/functions_LINCS.R")
+source(file = "~/GITS/AntiInflammation_Drugs/functions_spearman.R")
+source(file = "~/GITS/AntiInflammation_Drugs/functions_rankedexp_fgsea_enrichment_graph.R")
+source(file = "~/GITS/AntiInflammation_Drugs/optimal_cut_function.R")
+source(file = "~/GITS/AntiInflammation_Drugs/handy_network_functions.R")
+load("GOs_and_pathways.RData") #list of pathways 
