@@ -9,7 +9,12 @@
 library(igraph)
 library(data.table)
 #read medra hlt_pt relationships
-hlt_pt = fread("medDRA_hlt_pt.txt")
+inputs = scan("input_files.txt", what = "character", quiet = TRUE)
+hlt_pt = fread(inputs[14])
+
+#read the drug_adr (pt) network
+#read_graph(file = "results/drug_adr.gml") 
+
 #transform to graph
 g_hlt_pt = graph_from_incidence_matrix(incidence = as.matrix(table(hlt_pt)), directed = FALSE)
 #find pts in the drug_adr network
@@ -50,16 +55,16 @@ incidence_drug_adr = incidence_drug_adr[,order(colnames(incidence_drug_adr))]
 
 ##project to hlt x rows 
 projection_matrix = incidence_drug_adr%*%incidence_hlt_pt
-projection_matrix[1:5, 1:5]
+#projection_matrix[1:5, 1:5]
 
 #make network
 g_hlt_drug = graph_from_incidence_matrix(projection_matrix,  directed = FALSE, weighted = TRUE)
-g_hlt_drug
-igraph::edge_density(g_hlt_drug)
-plot(g_hlt_drug)
-components(g_hlt_drug)
-degree(g_hlt_drug, v = V(g_hlt_drug)[type == FALSE])
-tail(degree(g_hlt_drug, v = V(g_hlt_drug)[type == TRUE])[order(degree(g_hlt_drug, v = V(g_hlt_drug)[type == TRUE]))])
+#g_hlt_drug
+#igraph::edge_density(g_hlt_drug)
+#plot(g_hlt_drug)
+#components(g_hlt_drug)
+#degree(g_hlt_drug, v = V(g_hlt_drug)[type == FALSE])
+#tail(degree(g_hlt_drug, v = V(g_hlt_drug)[type == TRUE])[order(degree(g_hlt_drug, v = V(g_hlt_drug)[type == TRUE]))])
 
 write.graph(g_hlt_drug, file = "results/drug_hlt.gml", format = "gml")
 
