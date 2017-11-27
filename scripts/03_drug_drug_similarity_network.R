@@ -10,15 +10,15 @@ source("libraries/libraries.R")
 
 #read ranked matrices 
 
-cmap_matrix= fread(input = "results/krubor_cmap.txt", data.table = FALSE)
+cmap_matrix= fread(input = "results/krubor_cmap_ai.txt", data.table = FALSE)
 rownames(cmap_matrix) <- cmap_matrix[,1]
 cmap_matrix <- cmap_matrix[,-1]
 
-lincs1_matrix= fread(input = "results/krubor_lincs1.txt", data.table = FALSE)
+lincs1_matrix= fread(input = "results/krubor_lincs1_ai.txt", data.table = FALSE)
 rownames(lincs1_matrix) <- lincs1_matrix[,1]
 lincs1_matrix <- lincs1_matrix[,-1]
 
-lincs2_matrix= fread(input = "results/krubor_lincs2.txt", data.table = FALSE)
+lincs2_matrix= fread(input = "results/krubor_lincs2_ai.txt", data.table = FALSE)
 rownames(lincs2_matrix) <- lincs2_matrix[,1]
 lincs2_matrix <- lincs2_matrix[,-1]
 
@@ -121,4 +121,4 @@ lincs2_footrule_nw_analysis = NetworkAnalyzer(lincs2_footrule_nw$graph)
 save(cmap_correlation_nw_analysis, cmap_footrule_nw_analysis, 
      lincs1_correlation_nw_analysis, lincs1_correlation_nw_analysis, 
      lincs2_correlation_nw_analysis, lincs2_correlation_nw_analysis,
-     file = "results/drug_drug_networks_correlation_and_footrule_analysis.RData")
+     file = "results/drug_drug_networks_correlation_and_footrule_analysis_cmap_lincs_separated.RData")
